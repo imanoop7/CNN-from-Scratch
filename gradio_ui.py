@@ -21,8 +21,6 @@ def load_model():
 print("Initiating model loading.")
 nn = load_model()
 
-# Load the trained model (redundant loading removed)
-# Removed duplicate loading
 def predict(image):
     print("Received image for prediction.")
     image = np.array(image)  # Convert to numpy array

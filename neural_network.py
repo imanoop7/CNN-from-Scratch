@@ -79,19 +79,20 @@ class MaxPoolLayer:
         print(f"Initializing MaxPoolLayer with size {size} and stride {stride}")
         self.size = size
         self.stride = stride
+        self.max_indexes = {}
     
     def forward(self, input):
         print("MaxPoolLayer forward pass started.")
         self.input = input
-        batch_size, depth, height, width = input.shape
-        out_height = (height - self.size) // self.stride + 1
-        out_width = (width - self.size) // self.stride + 1
-        self.output = np.zeros((batch_size, depth, out_height, out_width))
-        self.max_indexes = {}
+        batch_size, depth, input_height, input_width = input.shape
+        out_height = (input_height - self.size) // self.stride + 1
+        out_width = (input_width - self.size) // self.stride + 1
 
         print(f"Input shape: {input.shape}")
         print(f"Output shape after pooling: ({batch_size}, {depth}, {out_height}, {out_width})")
 
+        self.output = np.zeros((batch_size, depth, out_height, out_width))
+        
         for b in range(batch_size):
             for d_layer in range(depth):
                 for i in range(out_height):
@@ -147,7 +148,7 @@ class FullyConnectedLayer:
         print(f"Gradient shapes - d_weights: {d_weights.shape}, d_bias: {d_bias.shape}, d_input: {d_input.shape}")
 
         # Update weights and biases
-        print("Updating FullyConnectedLayer weights and biases.")
+        print("Updating weights and biases in FullyConnectedLayer.")
         self.weights -= learning_rate * d_weights
         self.bias -= learning_rate * d_bias
         
