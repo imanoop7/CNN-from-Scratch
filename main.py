@@ -17,9 +17,9 @@ if __name__ == "__main__":
     print(f"One-hot encoded labels shape: {y_train_one_hot.shape}")
     
     # Network parameters
-    epochs = 1  # Reduced for faster initial testing
+    epochs = 10  # Reduced for faster initial testing
     learning_rate = 0.01
-    batch_size = 32  # Added batch size for mini-batch training
+    batch_size = 128  # Added batch size for mini-batch training
     print(f"Training parameters - Epochs: {epochs}, Learning Rate: {learning_rate}, Batch Size: {batch_size}")
     
     # Initialize and train the network

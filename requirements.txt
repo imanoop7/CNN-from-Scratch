@@ -2,3 +2,6 @@ numpy
 scikit-image
 tensorflow
 gradio
+intel-numpy
+intel-scipy
+onednn
