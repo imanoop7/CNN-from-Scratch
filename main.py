@@ -11,18 +11,15 @@ if __name__ == "__main__":
     y_train_one_hot[np.arange(y_train.size), y_train] = 1
     
     # Network parameters
-    input_size = X_train.shape[1]  # Flattened image size (28*28)
-    hidden_size = 128
-    output_size = 10  # Number of classes in MNIST
     epochs = 1000
-    learning_rate = 0.1
+    learning_rate = 0.01
     
     # Initialize and train the network
-    nn = NeuralNetwork(input_size, hidden_size, output_size)
+    nn = NeuralNetwork()
     nn.train(X_train, y_train_one_hot, epochs, learning_rate)
     
     # Save the trained weights and biases
-    np.save('weights_input_hidden.npy', nn.weights_input_hidden)
-    np.save('weights_hidden_output.npy', nn.weights_hidden_output)
-    np.save('bias_hidden.npy', nn.bias_hidden)
-    np.save('bias_output.npy', nn.bias_output)
+    np.save('conv_filters.npy', nn.conv.filters)
+    np.save('conv_biases.npy', nn.conv.biases)
+    np.save('fc_weights.npy', nn.fc.weights)
+    np.save('fc_bias.npy', nn.fc.bias)

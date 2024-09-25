@@ -4,17 +4,15 @@ from neural_network import NeuralNetwork
 from PIL import Image
 
 def load_model():
-    input_size = 28 * 28  # Flattened image size
-    hidden_size = 128
-    output_size = 10  # Number of classes in MNIST
-
-    nn = NeuralNetwork(input_size, hidden_size, output_size)
-    nn.weights_input_hidden = np.load('weights_input_hidden.npy')
-    nn.weights_hidden_output = np.load('weights_hidden_output.npy')
-    nn.bias_hidden = np.load('bias_hidden.npy')
-    nn.bias_output = np.load('bias_output.npy')
-    
+    nn = NeuralNetwork()
+    nn.conv.filters = np.load('conv_filters.npy')
+    nn.conv.biases = np.load('conv_biases.npy')
+    nn.fc.weights = np.load('fc_weights.npy')
+    nn.fc.bias = np.load('fc_bias.npy')
     return nn
+
+# Load the trained model
+nn = load_model()
 
 # Load the trained model
 nn = load_model()
@@ -22,15 +20,16 @@ nn = load_model()
 def predict(image):
     image = np.array(image)  # Convert to numpy array
     
-    # Check if the image is already in the correct shape
+    # Resize the image to 28x28 if it's not already
     if image.shape != (28, 28):
-        # Resize the image to 28x28 if it's not already
         image = Image.fromarray(image).resize((28, 28))
         image = np.array(image)
     
-    image = image.flatten().reshape(1, -1)  # Flatten the image
+    # Reshape for CNN input (add batch and channel dimensions)
+    image = image.reshape(1, 1, 28, 28) / 255.0  # Normalize to [0, 1]
     prediction = nn.forward(image)
     return int(np.argmax(prediction))  # Ensure the output is an integer
+
 
 # Create Gradio interface
 interface = gr.Interface(
