@@ -48,6 +48,7 @@ To run this project, you need the following dependencies:
    python gradio_ui.py
    ```
    This will launch a web interface where you can draw digits and get predictions from the model.
+   ![Gradio UI](gradio-ui.png)
 
 ## Model Architecture
 
